@@ -4,7 +4,8 @@
   "description": "A simple Node.js app to run a command and display the output on a webpage.",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "postinstall": "apt-get update && apt-get install -y netcat bash"
   },
   "dependencies": {
     "express": "^4.17.1"
