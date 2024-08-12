@@ -6,7 +6,7 @@ const PORT = process.env.PORT || 3000;
 
 app.get('/', (req, res) => {
     // Replace `your_command_here` with the command you want to run
-    exec('pwd', (error, stdout, stderr) => {
+    exec('ls', (error, stdout, stderr) => {
         if (error) {
             res.send(`<pre>Error: ${error.message}</pre>`);
             return;
