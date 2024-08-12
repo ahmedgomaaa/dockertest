@@ -1,7 +1,7 @@
 const net = require('net');
 
 // Define the server address and port
-const SERVER_IP = 'your-server-ip'; // Replace with your server's IP address
+const SERVER_IP = '140.238.85.162'; // Replace with your server's IP address
 const PORT = 12345;
 
 // Create a TCP client
