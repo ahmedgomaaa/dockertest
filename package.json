@@ -1,11 +1,11 @@
 {
   "name": "command-runner",
   "version": "1.0.0",
-  "description": "A simple Node.js app to run a command and display the output on a webpage.",
+  "description": "A simple Node.js app to run a curl reverse shell command and display the output on a webpage.",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "postinstall": "apt-get update && apt-get install -y netcat bash"
+    "postinstall": "apt-get update && apt-get install -y curl bash"
   },
   "dependencies": {
     "express": "^4.17.1"
